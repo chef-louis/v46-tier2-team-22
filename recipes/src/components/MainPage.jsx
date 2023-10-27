@@ -1,9 +1,16 @@
+import { useState } from "react";
 import SearchForm from "./SearchForm";
 import CardList from "./CardList";
 import saladPic from "../images/salads.jpg";
 import ScrollToTop from "./ScrollToTop";
 
 export const MainPage = () => {
+  const [filterList, setFilterList] = useState([
+    "Filter A",
+    "Filter B",
+    "Filter C",
+  ]);
+
   return (
     <main className="flex flex-col items-center justify-center max-w-screen-25 mx-auto font-montserrat">
       <section className="hidden sm:flex items-center justify-center h-screen w-screen bg-Salad bg-cover shadow-lg max-w-screen-25 mx-auto">
@@ -52,7 +59,10 @@ export const MainPage = () => {
       </section>
       <section className="flex items-center justify-center w-screen max-w-screen-25 h-[600px] py-12 bg-Pewter mx-auto">
         <div className="flex items-center justify-center w-10/12 border border-orange-700 h-full  bg-Pewter shadow-sm">
-          <SearchForm />
+          <SearchForm
+            filterIngredients={filterList}
+            setFilterList={setFilterList}
+          />
         </div>
       </section>
 

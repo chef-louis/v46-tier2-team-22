@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { arrayOf, shape, number, string } from "prop-types";
 
 import CardDetails from "./CardDetails";
@@ -6,44 +6,38 @@ import CardDetails from "./CardDetails";
 function Card({ recipe }) {
   const [toggleCardDetails, setToggleCardDetails] = useState(false);
 
-
-
-    const fetchData = async () => {
-      const url = `https://tasty.p.rapidapi.com/recipes/get-more-info?id=${recipe.id}`;
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': 'ee0b1fde36mshe7ecd0895ee5283p1a0ad4jsna86fc2392562',
-          'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
-        }
-      };
-      
-      try {
-        const response = await fetch(url, options);
-        if (response.ok) {
-          const result = await response.json();
-          return result.nutrition;
-        } else {
-          throw new Error('Failed to fetch nutrition data');
-        }
-      } catch (error) {
-        console.error(error);
-      }
+  const fetchData = async () => {
+    const url = `https://tasty.p.rapidapi.com/recipes/get-more-info?id=${recipe.id}`;
+    const options = {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Key": "ee0b1fde36mshe7ecd0895ee5283p1a0ad4jsna86fc2392562",
+        "X-RapidAPI-Host": "tasty.p.rapidapi.com",
+      },
     };
 
-  
-  
+    try {
+      const response = await fetch(url, options);
+      if (response.ok) {
+        const result = await response.json();
+        return result.nutrition;
+      } else {
+        throw new Error("Failed to fetch nutrition data");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-const renderCardDetails = async () => {
-  try {
-    const nutritionData = await fetchData();
-    recipe.nutrition = nutritionData;
-    setToggleCardDetails(!toggleCardDetails);
-  } catch (error) {
-    console.error(error);
-
-  }
-};
+  const renderCardDetails = async () => {
+    try {
+      const nutritionData = await fetchData();
+      recipe.nutrition = nutritionData;
+      setToggleCardDetails(!toggleCardDetails);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   function handleParentClick(e) {
     if (e.target === e.currentTarget) {
